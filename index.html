@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week1_Assignment</title>
+    <link rel="stylesheet" href="1.css" />
+</head>
+<body>
+    <!-- <form class="login-form"> -->
+        <div class="login">
+            <div id="reload"></div>
+            <div id="message"><h2>Wellcome to the game!</h2></div>
+            <div id="more"><h3>The number you guess is between 0 and 30 </h3></div>
+            <input type="number" id="number">
+            <button id="guessButton">Guess</button>
+        </div>
+        
+    <!-- </form> -->
+
+    
+</body>
+</html>
+<script>
+    var goalNumber= Math.floor(Math.random() * 30);
+    var arr=[];
+    var turn = 10;
+    console.log(goalNumber);
+    var button=document.getElementById("guessButton");
+    button.addEventListener('click',function(){
+         var guessNumber=parseInt(document.getElementById("number").value);
+         if(guessNumber>=0 && guessNumber<=30)
+         {
+            if(goalNumber===guessNumber){
+                        document.getElementById("message").innerHTML=`<h3>CONGRATULATIONS! ${guessNumber} was correct answer! It look you ${turn} tries to guess the answer</h3>`
+                        document.getElementById("guessButton").disabled = true;
+                        function timedRefresh(timeoutPeriod) {
+                        var timer = setInterval(function() {
+                        if (timeoutPeriod > 0) {
+                            timeoutPeriod -= 1;
+                            document.getElementById("reload").innerHTML = `<h3>This page will reload in ${timeoutPeriod}s</h3>`
+                        } else {
+                            clearInterval(timer);
+                                    window.location.href = window.location.href;
+                            };
+                        }, 1000);
+                        };
+                        timedRefresh(10);
+                                }
+                    
+                    else if(guessNumber>goalNumber)
+                    {
+                        turn--;
+                        document.getElementById("message").innerHTML=`<h3>Sorry your guess is too high, guess lower. You have ${turn} guess left</h3>`
+                    }
+                    else if(guessNumber<goalNumber)
+                    {
+                        turn--;
+                        document.getElementById("message").innerHTML=`<h3>Sorry your guess is too low, guess higher. You have ${turn} guess left</h3>`
+                    }
+                    var a=document.getElementById("message");
+                    if(goalNumber===guessNumber){
+                        a.classList.add('changeColorMessage');
+                        a.classList.remove('changeColorAlert');
+                    }
+                    else if(guessNumber>goalNumber || guessNumber<goalNumber){
+                        a.classList.add('changeColorAlert');
+                        a.classList.remove('changeColorMessage');
+                    }
+                    if(turn===0){
+                        a.innerHTML="<h1>END GAME! Better luck next time! </h1>"
+                        a.classList.add('changeColorAlert');
+                        document.getElementById("guessButton").disabled = true;
+                        // setTimeout(function() {
+                        //     var i=5;
+                        //     a.innerHTML=` This page will reload in ${i--}s`;
+                        //     location.reload();
+                        //     }, 5000);
+                        function timedRefresh(timeoutPeriod) {
+                        var timer = setInterval(function() {
+                        if (timeoutPeriod > 0) {
+                            timeoutPeriod -= 1;
+                            document.getElementById("reload").innerHTML = `<h3>This page will reload in ${timeoutPeriod}s</h3>`
+                        } else {
+                            clearInterval(timer);
+                                    window.location.href = window.location.href;
+                            };
+                        }, 1000);
+                        };
+                        timedRefresh(10);
+                                }
+                    arr.push(guessNumber);
+                    document.getElementById("more").innerHTML=`<h3>Your past guesses is ${arr}</h3>`
+        }
+        else{
+            document.getElementById("message").innerHTML="<h3>You must choose the number between 0 and 30! </h3>"
+            document.getElementById("more").innerHTML=""
+        }
+
+        
+    })
+</script>
